@@ -1,0 +1,68 @@
+<div class="container">
+  <h2>Cadastro de Evento</h2>
+
+  <form (ngSubmit)="salvar()">
+    
+    <!-- 1. Título do evento -->
+    <div class="form-group">
+      <label for="titulo">Título do evento</label>
+      <input 
+        type="text" 
+        id="titulo" 
+        name="titulo" 
+        [(ngModel)]="evento.titulo" 
+        required>
+    </div>
+
+    <!-- 2. Data -->
+    <div class="form-group">
+      <label for="data">Data</label>
+      <input 
+        type="date" 
+        id="data" 
+        name="data" 
+        [(ngModel)]="evento.data" 
+        required>
+    </div>
+
+    <!-- 3. Local -->
+    <div class="form-group">
+      <label for="local">Local</label>
+      <select 
+        id="local" 
+        name="local" 
+        [(ngModel)]="evento.local" 
+        required>
+        <option value="">Selecione um local</option>
+        <option value="Auditório">Auditório</option>
+        <option value="Laboratório 1">Laboratório 1</option>
+        <option value="Laboratório 2">Laboratório 2</option>
+        <option value="Sala 101">Sala 101</option>
+      </select>
+    </div>
+
+    <!-- 4. E-mail do responsável -->
+    <div class="form-group">
+      <label for="emailResponsavel">E-mail do responsável</label>
+      <input 
+        type="email" 
+        id="emailResponsavel" 
+        name="emailResponsavel" 
+        [(ngModel)]="evento.emailResponsavel" 
+        required>
+    </div>
+
+    <!-- 5. Vagas -->
+    <div class="form-group">
+      <label for="vagas">Vagas</label>
+      <input 
+        type="number" 
+        id="vagas" 
+        name="vagas" 
+        [(ngModel)]="evento.vagas" 
+        required>
+    </div>
+
+    <button type="submit">Salvar Evento</button>
+  </form>
+</div>
