@@ -1,0 +1,79 @@
+<form (ngSubmit)="salvar()">
+  
+  <div class="campo">
+    <label for="titulo">Título</label>
+    <input type="text" id="titulo" name="titulo" 
+           [(ngModel)]="evento.titulo" 
+           (blur)="onBlur('titulo')" 
+           (ngModelChange)="onChange()"
+           [class.invalido]="touched.titulo && erros.titulo">
+    @if (touched.titulo && erros.titulo) {
+      <span class="mensagem-erro">{{ erros.titulo }}</span>
+    }
+  </div>
+
+  <div class="campo">
+    <label for="data">Data</label>
+    <input type="date" id="data" name="data" 
+           [(ngModel)]="evento.data" 
+           (blur)="onBlur('data')" 
+           (ngModelChange)="onChange()"
+           [class.invalido]="touched.data && erros.data">
+    @if (touched.data && erros.data) {
+      <span class="mensagem-erro">{{ erros.data }}</span>
+    }
+  </div>
+
+  <div class="campo">
+    <label for="local">Local</label>
+    <input type="text" id="local" name="local" 
+           [(ngModel)]="evento.local" 
+           (blur)="onBlur('local')" 
+           (ngModelChange)="onChange()"
+           [class.invalido]="touched.local && erros.local">
+    @if (touched.local && erros.local) {
+      <span class="mensagem-erro">{{ erros.local }}</span>
+    }
+  </div>
+
+  <div class="campo">
+    <label for="emailResponsavel">E-mail do Responsável</label>
+    <input type="email" id="emailResponsavel" name="emailResponsavel" 
+           [(ngModel)]="evento.emailResponsavel" 
+           (blur)="onBlur('emailResponsavel')" 
+           (ngModelChange)="onChange()"
+           [class.invalido]="touched.emailResponsavel && erros.emailResponsavel">
+    @if (touched.emailResponsavel && erros.emailResponsavel) {
+      <span class="mensagem-erro">{{ erros.emailResponsavel }}</span>
+    }
+  </div>
+
+  <div class="campo">
+    <label for="vagas">Vagas</label>
+    <input type="number" id="vagas" name="vagas" 
+           [(ngModel)]="evento.vagas" 
+           (blur)="onBlur('vagas')" 
+           (ngModelChange)="onChange()"
+           [class.invalido]="touched.vagas && erros.vagas">
+    @if (touched.vagas && erros.vagas) {
+      <span class="mensagem-erro">{{ erros.vagas }}</span>
+    }
+  </div>
+
+  <!-- Botão desabilitado caso exista algum erro no formulário -->
+  <button type="submit" [disabled]="!formValido">Salvar</button>
+</form>
+
+<hr>
+
+<h3>Eventos Cadastrados</h3>
+<ul>
+  <!-- Nova sintaxe do Angular 17+ para listagem e tratamento de lista vazia -->
+  @for (ev of eventosSalvos; track ev.titulo) {
+    <li>
+      <strong>{{ ev.titulo }}</strong> - {{ ev.data }} | {{ ev.local }} | {{ ev.vagas }} vagas (Resp: {{ ev.emailResponsavel }})
+    </li>
+  } @empty {
+    <li>Nenhum evento foi cadastrado ainda.</li>
+  }
+</ul>

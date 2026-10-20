@@ -1,0 +1,23 @@
+.campo {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+}
+
+/* O campo com erro fica destacado em vermelho */
+.invalido {
+  border: 2px solid red;
+  background-color: #ffe6e6;
+}
+
+.mensagem-erro {
+  color: red;
+  font-size: 0.85em;
+  margin-top: 4px;
+}
+
+button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
