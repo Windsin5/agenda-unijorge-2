@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Evento } from './models/eventos';
+import { Evento } from '../eventos.model';
 import { 
   validarTitulo, 
   validarData, 
@@ -14,8 +14,8 @@ import {
   selector: 'app-eventos',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './eventos.html',
-  styleUrl: './eventos.css'
+  templateUrl: '../eventos.html',
+  styleUrl: '../eventos.css'
 })
 export class Eventos {
 

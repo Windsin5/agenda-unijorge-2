@@ -2,7 +2,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Evento } from './models/eventos'; // Interface no singular
+import { Evento } from './eventos.model';
 
 @Component({
   selector: 'app-eventos',

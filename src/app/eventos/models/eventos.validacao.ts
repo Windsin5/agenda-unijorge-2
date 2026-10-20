@@ -34,13 +34,16 @@ export function validarEmailResponsavel(email: string): string | null {
   return null;
 }
 
-export function validarVagas(vagas: number | null): string | null {
-  if (vagas === null || vagas === undefined || isNaN(vagas)) {
+export function validarVagas(vagas: number | string | null | undefined): string | null {
+  if (vagas === null || vagas === undefined || vagas === '') {
     return "As vagas devem ser um número inteiro de 1 a 200.";
   }
-  // Verifica se é número inteiro e está entre 1 e 200
-  if (!Number.isInteger(vagas) || vagas < 1 || vagas > 200) {
+
+  const numVagas = typeof vagas === 'string' ? Number(vagas) : vagas;
+
+  if (!Number.isInteger(numVagas) || numVagas < 1 || numVagas > 200) {
     return "As vagas devem ser um número inteiro de 1 a 200.";
   }
+
   return null;
 }
