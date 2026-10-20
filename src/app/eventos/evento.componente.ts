@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { validarTitulo, validarData, validarLocal, validarEmailResponsavel, validarVagas } from '../models/evento.validacao';
+import { validarTitulo, validarData, validarLocal, validarEmailResponsavel, validarVagas } from '../eventos/models/eventos.validacao';
 
 @Component({
-  selector: 'app-evento',
+  selector: 'app-eventos',
   standalone: true,
   imports: [FormsModule],
-  templateUrl: './evento.component.html',
-  styleUrls: ['./evento.component.css']
+  templateUrl: './evento.componente.html',
+  styleUrls: ['./evento.componente.css']
 })
-export class EventoComponent {
+export class EventoComponente {
   // Estado do formulário
   evento = { titulo: '', data: '', local: '', emailResponsavel: '', vagas: '' };
   
