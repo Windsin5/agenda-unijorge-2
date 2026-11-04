@@ -1,12 +1,13 @@
+<h2>Cadastro de Evento</h2>
 <form (ngSubmit)="salvar()">
-  
   <div class="campo">
     <label for="titulo">Título</label>
-    <input type="text" id="titulo" name="titulo" 
-           [(ngModel)]="evento.titulo" 
-           (blur)="onBlur('titulo')" 
+    <input type="text" id="titulo" name="titulo"
+           [(ngModel)]="evento.titulo"
+           (blur)="onBlur('titulo')"
            (ngModelChange)="onChange()"
-           [class.invalido]="touched.titulo && erros.titulo">
+           [class.invalido]="touched.titulo && erros.titulo"
+           required>
     @if (touched.titulo && erros.titulo) {
       <span class="mensagem-erro">{{ erros.titulo }}</span>
     }
@@ -14,11 +15,12 @@
 
   <div class="campo">
     <label for="data">Data</label>
-    <input type="date" id="data" name="data" 
-           [(ngModel)]="evento.data" 
-           (blur)="onBlur('data')" 
+    <input type="date" id="data" name="data"
+           [(ngModel)]="evento.data"
+           (blur)="onBlur('data')"
            (ngModelChange)="onChange()"
-           [class.invalido]="touched.data && erros.data">
+           [class.invalido]="touched.data && erros.data"
+           required>
     @if (touched.data && erros.data) {
       <span class="mensagem-erro">{{ erros.data }}</span>
     }
@@ -26,23 +28,25 @@
 
   <div class="campo">
     <label for="local">Local</label>
-    <input type="text" id="local" name="local" 
-           [(ngModel)]="evento.local" 
-           (blur)="onBlur('local')" 
+    <input type="text" id="local" name="local"
+           [(ngModel)]="evento.local"
+           (blur)="onBlur('local')"
            (ngModelChange)="onChange()"
-           [class.invalido]="touched.local && erros.local">
+           [class.invalido]="touched.local && erros.local"
+           required>
     @if (touched.local && erros.local) {
       <span class="mensagem-erro">{{ erros.local }}</span>
     }
   </div>
 
   <div class="campo">
-    <label for="emailResponsavel">E-mail do Responsável</label>
-    <input type="email" id="emailResponsavel" name="emailResponsavel" 
-           [(ngModel)]="evento.emailResponsavel" 
-           (blur)="onBlur('emailResponsavel')" 
+    <label for="emailResponsavel">E-mail do responsável</label>
+    <input type="email" id="emailResponsavel" name="emailResponsavel"
+           [(ngModel)]="evento.emailResponsavel"
+           (blur)="onBlur('emailResponsavel')"
            (ngModelChange)="onChange()"
-           [class.invalido]="touched.emailResponsavel && erros.emailResponsavel">
+           [class.invalido]="touched.emailResponsavel && erros.emailResponsavel"
+           required>
     @if (touched.emailResponsavel && erros.emailResponsavel) {
       <span class="mensagem-erro">{{ erros.emailResponsavel }}</span>
     }
@@ -50,28 +54,118 @@
 
   <div class="campo">
     <label for="vagas">Vagas</label>
-    <input type="number" id="vagas" name="vagas" 
-           [(ngModel)]="evento.vagas" 
-           (blur)="onBlur('vagas')" 
+    <input type="number" id="vagas" name="vagas"
+           [(ngModel)]="evento.vagas"
+           (blur)="onBlur('vagas')"
            (ngModelChange)="onChange()"
-           [class.invalido]="touched.vagas && erros.vagas">
+           [class.invalido]="touched.vagas && erros.vagas"
+           required>
     @if (touched.vagas && erros.vagas) {
       <span class="mensagem-erro">{{ erros.vagas }}</span>
     }
   </div>
 
-  <!-- Botão desabilitado caso exista algum erro no formulário -->
-  <button type="submit" [disabled]="!formValido">Salvar</button>
+  <button type="submit" [disabled]="!formValido">Salvar evento</button>
 </form>
 
-<hr>
+@if (erroEventos) {
+  <p class="mensagem-erro" role="alert">{{ erroEventos }}</p>
+}
 
-<h3>Eventos Cadastrados</h3>
-<ul>
-  <!-- Nova sintaxe do Angular 17+ para listagem e tratamento de lista vazia -->
-  @for (ev of eventosSalvos; track ev.titulo) {
+<hr>
+<h3>Eventos cadastrados</h3>
+<ul class="lista-eventos">
+  @for (ev of eventosSalvos; track ev.id) {
     <li>
-      <strong>{{ ev.titulo }}</strong> - {{ ev.data }} | {{ ev.local }} | {{ ev.vagas }} vagas (Resp: {{ ev.emailResponsavel }})
+      <div class="evento-resumo">
+        <div>
+          <strong>{{ ev.titulo }}</strong>
+          <span>{{ ev.data }} | {{ ev.local }} | {{ ev.vagas }} vagas</span>
+          <span>Responsável: {{ ev.emailResponsavel }}</span>
+        </div>
+        <button type="button" (click)="gerenciarParticipantes(ev.id)">
+          {{ eventoSelecionadoId === ev.id ? 'Fechar participantes' : 'Gerenciar participantes' }}
+        </button>
+      </div>
+
+      @if (eventoSelecionadoId === ev.id) {
+        <section class="participantes" aria-label="Gerenciamento de participantes">
+          <h4>Participantes de {{ ev.titulo }}</h4>
+
+          <form (ngSubmit)="salvarParticipante()">
+            <div class="campo">
+              <label for="nomeCompletoParticipante">Nome Completo</label>
+              <input type="text" id="nomeCompletoParticipante" name="nomeCompletoParticipante"
+                     [(ngModel)]="participante.nomeCompleto"
+                     minlength="10" required>
+              @if (participante.nomeCompleto && !nomeCompletoValido(participante.nomeCompleto)) {
+                <span class="mensagem-erro">O nome completo deve conter pelo menos 10 caracteres.</span>
+              }
+            </div>
+
+            <div class="campo">
+              <label for="descricaoParticipante">Descrição</label>
+              <input type="text" id="descricaoParticipante" name="descricaoParticipante"
+                     [(ngModel)]="participante.descricao" required>
+            </div>
+
+            <div class="campo">
+              <label for="emailParticipante">E-mail</label>
+              <input type="email" id="emailParticipante" name="emailParticipante"
+                     [(ngModel)]="participante.email" required>
+            </div>
+
+            <div class="campo">
+              <label for="telefoneParticipante">Telefone</label>
+              <input type="tel" id="telefoneParticipante" name="telefoneParticipante"
+                     [(ngModel)]="participante.telefone" required>
+            </div>
+
+            <div class="campo">
+              <label for="formaPagamento">Forma de pagamento</label>
+              <input type="text" id="formaPagamento" name="formaPagamento"
+                     [(ngModel)]="participante.formaPagamento"
+                     placeholder="Ex.: Pix, cartão ou dinheiro" required>
+            </div>
+
+            <div class="acoes-formulario">
+              <button type="submit">
+                {{ participanteEmEdicaoId === null ? 'Adicionar participante' : 'Salvar alterações' }}
+              </button>
+              @if (participanteEmEdicaoId !== null) {
+                <button type="button" class="botao-secundario" (click)="cancelarEdicaoParticipante()">
+                  Cancelar edição
+                </button>
+              }
+            </div>
+          </form>
+
+          @if (erroParticipante) {
+            <p class="mensagem-erro" role="alert">{{ erroParticipante }}</p>
+          }
+
+          <h4>Participantes cadastrados</h4>
+          <ul class="lista-participantes">
+            @for (p of participantesDoEvento; track p.id) {
+              <li>
+                <div>
+                  <strong>{{ p.descricao }}</strong>
+                  <span>{{ p.email }} | {{ p.telefone }}</span>
+                  <span>Pagamento: {{ p.formaPagamento }}</span>
+                </div>
+                <div class="acoes-participante">
+                  <button type="button" (click)="editarParticipante(p)">Editar</button>
+                  <button type="button" class="botao-perigo" (click)="excluirParticipante(p.id)">
+                    Excluir
+                  </button>
+                </div>
+              </li>
+            } @empty {
+              <li>Nenhum participante cadastrado para este evento.</li>
+            }
+          </ul>
+        </section>
+      }
     </li>
   } @empty {
     <li>Nenhum evento foi cadastrado ainda.</li>
