@@ -1,7 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { validarTitulo, validarData, validarLocal, validarEmailResponsavel, validarVagas } from '../eventos/models/eventos.validacao';
+import {
+  validarTitulo,
+  validarData,
+  validarLocal,
+  validarEmailResponsavel,
+  validarVagas
+} from './models/eventos.validacao';
 import { Evento } from './eventos.model';
 import { EventosService } from './eventos.service';
 import { DadosParticipante, Participante } from './participante.model';
