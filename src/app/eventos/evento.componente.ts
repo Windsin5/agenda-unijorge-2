@@ -13,6 +13,7 @@ import { EventosService } from './eventos.service';
 import { DadosParticipante, Participante } from './participante.model';
 
 type FormularioEvento = Omit<Evento, 'id' | 'vagas'> & { vagas: string };
+export type FormaPagamento = 'pix' | 'cartao' | 'boleto' | 'dinheiro' | '';
 
 @Component({
   selector: 'app-eventos',

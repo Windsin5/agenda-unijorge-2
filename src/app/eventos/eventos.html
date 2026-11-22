@@ -17,6 +17,7 @@
     <!-- 2. Data -->
     <div class="form-group">
       <label for="data">Data</label>
+      <span>{{ evento.data | date:'dd/MM/yyyy' }}</span>
       <input 
         type="date" 
         id="data" 
@@ -28,6 +29,7 @@
     <!-- 3. Local -->
     <div class="form-group">
       <label for="local">Local</label>
+      <span>{{ evento.local | uppercase }}</span>
       <select 
         id="local" 
         name="local" 
@@ -55,6 +57,7 @@
     <!-- 5. Vagas -->
     <div class="form-group">
       <label for="vagas">Vagas</label>
+      <span>{{ evento.vagas | number }}</span>
       <input 
         type="number" 
         id="vagas" 
@@ -64,5 +67,6 @@
     </div>
 
     <button type="submit">Salvar Evento</button>
+    
   </form>
 </div>

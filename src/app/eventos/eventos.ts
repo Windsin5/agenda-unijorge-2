@@ -1,13 +1,19 @@
 // src/app/eventos/eventos.ts
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe, UpperCasePipe, DecimalPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Evento } from './eventos.model';
 
 @Component({
   selector: 'app-eventos',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    DatePipe,
+    UpperCasePipe,
+    DecimalPipe
+  ],
   templateUrl: './eventos.html',
   styleUrl: './eventos.css'
 })
